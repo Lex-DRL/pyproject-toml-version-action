@@ -38,7 +38,10 @@ runs:
     uses: actions/setup-python@v7
     with:
       python-version: ${{ inputs.python-version }}
-      cache: 'pip'
+      # cache: 'pip' # Pointless here (only one tiny package installed)
+      # # It can also fail the step when the caller’s repo
+      # # has no dependency file matching `setup-python`’s default glob:
+      # # e.g. if `toml-file` points to a non-standard location.
 
   - name: 📥 Install PIP requirements
     shell: bash
