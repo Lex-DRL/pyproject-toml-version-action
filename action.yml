@@ -1,0 +1,56 @@
+name: "'pyproject.toml' version 🔢"
+description: >-
+  Get version from "pyproject.toml". Simple as that.
+author: "Lex Darlog"
+
+branding:
+  # https://feathericons.com/
+#  icon: tag
+#  icon: package
+  icon: code
+  color: gray-dark
+
+inputs:
+  toml-file:
+    description: 'Path to a TOML file to extract version from. Default: "pyproject.toml"'
+    required: false
+    default: 'pyproject.toml'
+  python-version:
+    description: 'Python version to use internally. Default: "3.x"'
+    required: false
+    default: '3.x'
+  skip-python-setup:
+    description: 'Skip setup-python step if caller already did it. Anything except "false" and "" is considered "true".'
+    required: false
+    default: 'false'
+
+outputs:
+  version:
+    description: 'The extracted package version'
+    value: ${{ steps.extract-version.outputs.version }}
+
+runs:
+  using: "composite"
+
+  steps:
+  - name: 🐍 Set up Python
+    if: inputs.skip-python-setup == 'false' || inputs.skip-python-setup == ''
+    uses: actions/setup-python@v7
+    with:
+      python-version: ${{ inputs.python-version }}
+      cache: 'pip'
+
+  - name: 📥 Install PIP requirements
+    shell: bash
+    run: >-
+      python -m pip install
+      "tomli>=2"
+
+  - name: Extract version 🔢
+    id: extract-version
+    shell: bash
+    env:
+      toml_file: ${{ inputs.toml-file }}
+    run: |
+      # Sets 'version' output in GITHUB_OUTPUT
+      python '${{ github.action_path }}/get-version-from-toml.py'
