@@ -25,8 +25,6 @@ jobs:
     steps:
     - name: ♻️ Check out code
       uses: actions/checkout@v7
-      # with:
-      #   fetch-depth: 0  # Critical for changelog + first-release support
 
     - name: "Extract version 🔢"
       # Internally, it sets up python and uses pip for its dependencies
@@ -37,9 +35,13 @@ jobs:
       #   python-version: '3.x'  # What python version to install
       #   skip-python-setup: false  # Skip python installation, if already done by previous steps
 
+      # It outputs only one value: 'version'
+      # Use later in the same job with:
+      # ${{ steps.<ID OF THIS STEP - as set above 👆🏻>.outputs.version }}
+
     - name: "Example use"
       # Here, we just print the output,
       # but feel free to pas it to an actual useful step: 
       run: |
-        echo "Extracted version: ${{ steps.extract-version.outputs.version }}"
+        echo 'Extracted version: ${{ steps.extract-version.outputs.version }}'
 ```
