@@ -31,7 +31,8 @@ concurrency:
 jobs:
 
   just-release-it-to-gh:
-    name: "📦 Just release it! to GitHub"
+    name: >-
+      📦 Just release it! to GitHub
     # needs: [build]
 
     # Just to be nice with forked repos made solely for a PR - let's run only if:
@@ -63,12 +64,7 @@ jobs:
 
     - name: "📦 Just release it!"
       id: just-release-it
-      # Also acts as a pre-release test: if fails, something's wrong
+      # The use of 'main' branch also acts as a pre-release test: if fails, something's wrong:
       uses: Lex-DRL/just-release-it-action@main
       # with:
       #   # skip-python-setup: true
-      #   attach-files: |
-      #     dist/*.whl
-      #     dist/*.whl.zip
-      #     dist/*.whl.gz
-      #     dist/*.whl.tar.gz
