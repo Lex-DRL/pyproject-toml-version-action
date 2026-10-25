@@ -65,4 +65,4 @@ jobs:
 
     - name: "Test print"
       run: |
-        echo "Extracted version: ${{ steps.extract-version.outputs.version }}"
+        echo 'Extracted version: ${{ steps.extract-version.outputs.version }}'
