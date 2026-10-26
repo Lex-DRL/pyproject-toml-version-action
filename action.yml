@@ -47,7 +47,7 @@ runs:
     shell: bash
     run: >-
       python -m pip install
-      "tomli>=2"
+      "pyproject-toml-version >= 0.5"
 
   - name: Extract version 🔢
     id: extract-version
