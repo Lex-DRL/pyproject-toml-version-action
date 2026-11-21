@@ -13,16 +13,18 @@ from _shared_utils import _cleanup_as_single_line, _EnvInputsABC, GithubOutput
 class EnvInputs(_EnvInputsABC):
 	"""Script 'arguments' passed as env-vars (for security reasons)."""
 	toml_file: str
+	dynamic_field: str
 
 	def __post_init__(self):
 		self.toml_file = _cleanup_as_single_line(self.toml_file)
+		self.dynamic_field = _cleanup_as_single_line(self.dynamic_field)
 
 
 def version_main(github_output_env: str = 'GITHUB_OUTPUT', ) -> None:
 	env_args = EnvInputs.from_env()
 	env_args.print()
 
-	version = pyproject_version(env_args.toml_file)
+	version = pyproject_version(env_args.toml_file, dynamic_field=env_args.dynamic_field)
 
 	GithubOutput(github_output_env=github_output_env).set(version=version)
 
