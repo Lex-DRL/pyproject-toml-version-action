@@ -10,6 +10,12 @@
 *GitHub action to get version from `pyproject.toml`. Simple as that.*
 </div>
 
+> [!NOTE]
+> ## Dynamic version support
+> aka *"getting version that's not typed in `pyproject.toml` directly but is referenced from a dedicated `*.py` file"*.
+> 
+> Likely, should work for you, unless you do something unusual. But check the status in the [`pyproject-toml-version` package](https://github.com/Lex-DRL/pyproject-toml-version) which actually implements version extraction.
+
 ## Example
 
 ```yaml
@@ -31,9 +37,14 @@ jobs:
       id: extract-version
       uses: Lex-DRL/pyproject-toml-version-action@v1
       # with:
-      #   toml-file: 'pyproject.toml'  # What file to read version from
-      #   python-version: '3.x'  # What python version to install
-      #   skip-python-setup: false  # Skip python installation, if already done by previous steps
+      #   # What file to read version from:
+      #   toml-file: 'pyproject.toml'
+      #   # If dynamic version is used along with any Fallback backend, what field to read for the dynamic-version-file path from your "*.toml":
+      #   dynamic-field: 'tool.my-backend.version.dynamic_path'
+      #   # What python version to install:
+      #   python-version: '3.x'
+      #   # Skip python installation, if already done by previous steps:
+      #   skip-python-setup: false
 
       # It outputs only one value: 'version'
       # Use later in the same job with:
